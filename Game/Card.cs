@@ -18,8 +18,6 @@ namespace Game
         private int ap;
         //DP (Defense Points)
         private int dp;
-        //How many of them there are
-        private int Quantity;
 
         //constructor for card types
         public Card(string name, int cost, int ap, int dp)

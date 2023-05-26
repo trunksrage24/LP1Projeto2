@@ -27,7 +27,7 @@ namespace Game
 
             foreach (Card card in deck)
             {
-                Console.WriteLine($"Card: {card.Name}, {card.Cost}, {card.AP}, {card.DP}");
+                Console.WriteLine("Card: {0}, {1}, {2}, {3}", card.Name, card.Cost.ToString(), card.AP.ToString(), card.DP.ToString());
             }
         }
     }  
