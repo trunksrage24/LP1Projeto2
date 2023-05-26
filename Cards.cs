@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 namespace LP1Projeto2
 {
     /// <summary>
-    /// Stats for each card
+    /// class with list of card names and attributes to use in game
     /// </summary>
-    public class Cards
+    abstract class Cards
     {
         //Name
         public string Name { get; set; }
@@ -21,5 +21,4 @@ namespace LP1Projeto2
         //How many of them there are
         public int Quantity { get; set; }
     }
-
 }

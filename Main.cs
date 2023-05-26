@@ -5,8 +5,12 @@ using System.Threading.Tasks;
 
 namespace LP1Projeto2
 {
-    public class Main
+    public class Game
     {
-        
+        private Player player1;
+        private Player player2;
+
+        public Game()
+
     }
 }
