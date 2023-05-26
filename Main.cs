@@ -45,34 +45,55 @@ namespace LP1Projeto2
                 Hand = new List<Card>();
             }
         }
-    }
+    
 
-    /// <summary>
-    /// Main loop.
-    /// </summary>
-    public void StartGame()
-    {
+        /// <summary>
+        /// Main loop.
+        /// </summary>
+        public void StartGame()
+        {
+            //shuffle the decks
+            ShuffleDeck(player1);
+            ShuffleDeck(player2);
 
-    }
+            //Starting hand
+            DrawInitialHand(player1);
+            DrawInitialHand(player2);
+        }
 
+        /// <summary>
+        /// This will shuffle the cards before giving them to the players.
+        /// </summary>
+        /// <param name="player"></param>
+        private void DeckShuffler(Player player)
+        {
+            //Use this to shuffle the deck
+        }
 
-    private void DeckShuffler(Player player)
-    {
-        //Use this to shuffle the deck
-    }
+        /// <summary>
+        /// Starting hand
+        /// </summary>
+        /// <param name="player"></param>
+        private void DrawInitialHand(Player player)
+        {
+            //Use this to give players their hand each turn.
+        }
 
-    private void DrawInitialHand(Player player)
-    {
-        //Use this to give players their hand each turn.
-    }
+        /// <summary>
+        /// You will place your cards here
+        /// </summary>
+        /// <param name="player"></param>
+        private void PlayTurn(Player player)
+        {
+            //Placement/Magic Phase
+        }
 
-    private void PlayTurn(Player player)
-    {
-        //Placement/Magic Phase
-    }
-
-    private void AttackPhase()
-    {
-        //Attack Phase
+        /// <summary>
+        /// This will begin the autonomous combat.
+        /// </summary>
+        private void AttackPhase()
+        {
+            //Attack Phase
+        }
     }
 }
