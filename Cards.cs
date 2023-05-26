@@ -3,22 +3,55 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LP1Projeto2
+namespace Game
 {
     /// <summary>
     /// class with list of card names and attributes to use in game
     /// </summary>
-    abstract class Cards
+    public class Card
     {
         //Name
-        public string Name { get; set; }
-        //MP (Mana Points) ccost
-        public int Cost { get; set; }
+        private string name;
+        //MP (Mana Points) cost
+        private int cost;
         //AP (Attack Points)
-        public int AttackPoints { get; set; }
+        private int ap;
         //DP (Defense Points)
-        public int DefensePoints { get; set; }
-        //How many of them there are
-        public int Quantity { get; set; }
+        private int dp;
+
+        //constructor for card types
+        public Card(string name, int cost, int ap, int dp)
+        {
+            this.name = name;
+            this.cost = cost;
+            this.ap = ap;
+            this.dp = dp;
+        }
+
+        //getter and setter for each variable:
+        public string Name
+        {
+            get { return name; }
+            set { name = value; }
+        }
+
+        public string Cost
+        {
+            get { return cost; }
+            set { cost = value; }
+        }
+
+        public string AP
+        {
+            get { return ap; }
+            set { ap = value; }
+        }
+
+        public string DP
+        {
+            get { return dp; }
+            set { dp = value; }
+        }
     }
+
 }
