@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Game
+namespace GameCode
 {
     /// <summary>
     /// class with list of card names and attributes to use in game
@@ -35,19 +35,19 @@ namespace Game
             set { name = value; }
         }
 
-        public string Cost
+        public int Cost
         {
             get { return cost; }
             set { cost = value; }
         }
 
-        public string AP
+        public int AP
         {
             get { return ap; }
             set { ap = value; }
         }
 
-        public string DP
+        public int DP
         {
             get { return dp; }
             set { dp = value; }

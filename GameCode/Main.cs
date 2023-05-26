@@ -3,17 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LP1Projeto2
+namespace GameCode
 {
     public class Game
     {
-        //Create player 1 and 2
         private Player player1;
         private Player player2;
 
-        /// <summary>
-        /// Main loop
-        /// </summary>
         public Game()
         {
             // Initialize players and their decks
@@ -23,37 +19,36 @@ namespace LP1Projeto2
                 ManaPoints = 0,
                 Deck = new List<Card>
                 {
-                    //Card List, will have to make it randomly generated
-                    new Card { "Flying wand" }
-                    //Add the rest of the cards to the deck
-                }
-                //Create new list using the cards generated
-                Hand = new List<Card>();
-            }
+                    // Card List, will have to make it randomly generated
+                    new Card("Flying wand", 1, 1, 1)
+                    // Add the rest of the cards to the deck
+                },
+                Hand = new List<Card>()
+            };
 
-            //Repeat the process for player 1
+            // Repeat the process for player 2
             player2 = new Player
             {
                 HealthPoints = 10,
                 ManaPoints = 0,
                 Deck = new List<Card>
                 {
-                    //Card List, will have to make it randomly generated
-                    //Add cards for player 2
-                }
-                //Create new list using the cards generated
-                Hand = new List<Card>();
-            }
+                    // Card List, will have to make it randomly generated
+                    // Add cards for player 2
+                },
+                Hand = new List<Card>()
+            };
         }
-    
-        /// <summary>
-        /// Main loop.
-        /// </summary>
+
         public void StartGame()
         {
-            //shuffle the decks
-            ShuffleDeck(player1);
-            ShuffleDeck(player2);
+            // Shuffle the decks
+            DeckShuffler(player1);
+            DeckShuffler(player2);
+
+            // Starting hand
+            DrawInitialHand(player1);
+            DrawInitialHand(player2);
 
             //Starting hand
             DrawInitialHand(player1);
@@ -61,8 +56,8 @@ namespace LP1Projeto2
 
             //Game loop, checks both players health and card quantity.
             while (player1.HealthPoints > 0 && player2.HealthPoints > 0 
-            && (player1.Deck.Count > 0 || player1.Hand.Count > 0 |
-            | player2.Deck.Count > 0 || player2.Hand.Count > 0))
+            && (player1.Deck.Count > 0 || player1.Hand.Count > 0 || 
+            player2.Deck.Count > 0 || player2.Hand.Count > 0))
             {
                 //Player 1 places their cards first
                 PlayTurn(player1);
@@ -106,7 +101,9 @@ namespace LP1Projeto2
         /// <param name="player"></param>
         private void DeckShuffler(Player player)
         {
-            //Use this to shuffle the deck
+            CardList(); // Populate the deck with cards
+
+            // Use this to shuffle the deck
         }
 
         /// <summary>
@@ -140,10 +137,10 @@ namespace LP1Projeto2
 
         private void CardList()
         {
-            //Create list for card types
+            // Create list for card types
             List<Card> deck = new List<Card>();
 
-            //Create each card type and add it to the deck
+            // Create each card type and add it to the deck
             deck.Add(new Card("Flying Wind", 1, 1, 1));
             deck.Add(new Card("Severed Monkey Head", 1, 2, 1));
             deck.Add(new Card("Mystical Rock Head", 2, 0, 5));
@@ -157,9 +154,9 @@ namespace LP1Projeto2
 
             foreach (Card card in deck)
             {
-                Console.WriteLine("Card: {0}, {1}, {2}, {3}", card.Name, 
-                card.Cost.ToString(), card.AP.ToString(), card.DP.ToString());
+                Console.WriteLine("Card: {0}, {1}, {2}, {3}", card.Name, card.Cost.ToString(), card.AP.ToString(), card.DP.ToString());
             }
         }
+
     }
 }
