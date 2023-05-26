@@ -42,9 +42,37 @@ namespace LP1Projeto2
                     //Add cards for player 2
                 }
                 //Create new list using the cards generated
-                Hand = new List<Card>()
-            };
+                Hand = new List<Card>();
+            }
         }
     }
 
+    /// <summary>
+    /// Main loop.
+    /// </summary>
+    public void StartGame()
+    {
+
+    }
+
+
+    private void DeckShuffler(Player player)
+    {
+        //Use this to shuffle the deck
+    }
+
+    private void DrawInitialHand(Player player)
+    {
+        //Use this to give players their hand each turn.
+    }
+
+    private void PlayTurn(Player player)
+    {
+        //Placement/Magic Phase
+    }
+
+    private void AttackPhase()
+    {
+        //Attack Phase
+    }
 }
