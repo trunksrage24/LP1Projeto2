@@ -160,5 +160,6 @@ namespace LP1Projeto2
                 Console.WriteLine("Card: {0}, {1}, {2}, {3}", card.Name, 
                 card.Cost.ToString(), card.AP.ToString(), card.DP.ToString());
             }
+        }
     }
 }
