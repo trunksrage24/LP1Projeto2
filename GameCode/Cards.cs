@@ -6,29 +6,27 @@ using System.Threading.Tasks;
 namespace GameCode
 {
     /// <summary>
-    /// class with list of card names and attributes to use in game
+    /// Class with card attributes to use in the game
     /// </summary>
     public class Card
     {
-        //Name
         private string name;
-        //MP (Mana Points) cost
         private int cost;
-        //AP (Attack Points)
         private int ap;
-        //DP (Defense Points)
         private int dp;
+        private int quantity;
 
-        //constructor for card types
-        public Card(string name, int cost, int ap, int dp)
+        // Constructor for card types
+        public Card(string name, int cost, int ap, int dp, int quantity)
         {
             this.name = name;
             this.cost = cost;
             this.ap = ap;
             this.dp = dp;
+            this.quantity = quantity;
         }
 
-        //getter and setter for each variable:
+        // Getter and setter for each variable:
         public string Name
         {
             get { return name; }
@@ -52,6 +50,11 @@ namespace GameCode
             get { return dp; }
             set { dp = value; }
         }
-    }
 
+        public int Quantity
+        {
+            get { return quantity; }
+            set { quantity = value; }
+        }
+    }
 }

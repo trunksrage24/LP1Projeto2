@@ -10,6 +10,8 @@ namespace GameCode
         private Player player1;
         private Player player2;
 
+        private int currentTurn;
+
         public Game()
         {
             // Initialize players and their decks
@@ -20,7 +22,7 @@ namespace GameCode
                 Deck = new List<Card>
                 {
                     // Card List, will have to make it randomly generated
-                    new Card("Flying wand", 1, 1, 1)
+                    new Card("Flying wand", 1, 1, 1, 4)
                     // Add the rest of the cards to the deck
                 },
                 Hand = new List<Card>()
@@ -42,6 +44,9 @@ namespace GameCode
 
         public void StartGame()
         {
+
+            currentTurn = 1; // Initialize current turn to 1
+
             // Shuffle the decks
             DeckShuffler(player1);
             DeckShuffler(player2);
@@ -60,11 +65,13 @@ namespace GameCode
             player2.Deck.Count > 0 || player2.Hand.Count > 0))
             {
                 //Player 1 places their cards first
-                PlayTurn(player1);
-                //Player 2 places their cards second
-                PlayTurn(player2);
+
                 //begin autonomous combat afterwards
                 AttackPhase();
+
+                PlayTurn(player1, currentTurn);
+                PlayTurn(player2, currentTurn);
+
             }
 
             //Determine the winner
@@ -119,13 +126,50 @@ namespace GameCode
         /// You will place your cards here
         /// </summary>
         /// <param name="player"></param>
-        private void PlayTurn(Player player)
+        private void PlayTurn(Player player, int currentTurn)
         {
-            //Placement/Magic Phase
-            //ADD OPTIONS FOR PLAYERS TO CHOOSE FROM.
-            //1. Card list -> 1-6 depending on your hand. -> Continue or finish?
-            //2. Surrender
+            Console.WriteLine($"Player {(player == player1 ? "1" : "2")}'s turn");
+            Console.WriteLine("Placement Phase");
+
+            int maxMana = Math.Min(player.MaxMana, 5); // Maximum mana for this turn
+            int availableMana = Math.Min(player.ManaPoints, maxMana); // Available mana to spend
+
+            int cardsToPlay = Math.Min(player.Hand.Count, availableMana);
+
+            for (int i = 0; i < cardsToPlay; i++)
+            {
+                Card card = player.Hand[i];
+
+                Console.WriteLine($"Player {(player == player1 ? "1" : "2")} puts down {card.Name}");
+                // Add logic to handle the placement of the card
+
+                // Update player's mana points and remove the card from their hand
+                player.ManaPoints -= card.Cost;
+                player.Hand.RemoveAt(i);
+            }
+
+            // Increment turn counter
+            currentTurn++;
+
+            // Update maximum mana for this turn
+            if (currentTurn <= 5)
+                player.MaxMana++;
+
+            Console.WriteLine("End turn? 1, Continue 2");
+            string input = Console.ReadLine();
+
+            if (input == "1")
+                return;
+            else if (input == "2")
+                PlayTurn(player == player1 ? player2 : player1, currentTurn);
+            else
+                Console.WriteLine("Invalid input. Continuing turn.");
+
+            // Add logic for other options in the placement phase
         }
+
+
+
 
         /// <summary>
         /// This will begin the autonomous combat.
@@ -141,16 +185,16 @@ namespace GameCode
             List<Card> deck = new List<Card>();
 
             // Create each card type and add it to the deck
-            deck.Add(new Card("Flying Wind", 1, 1, 1));
-            deck.Add(new Card("Severed Monkey Head", 1, 2, 1));
-            deck.Add(new Card("Mystical Rock Head", 2, 0, 5));
-            deck.Add(new Card("Lobster MCCrabs", 2, 1, 3));
-            deck.Add(new Card("Goblin Troll", 3, 3, 2));
-            deck.Add(new Card("Scorching Heatwave", 4, 5, 3));
-            deck.Add(new Card("Blind Minotaurs", 3, 1, 3));
-            deck.Add(new Card("Tim, The Wizard", 5, 6, 4));
-            deck.Add(new Card("Sharply Dressed", 4, 3, 3));
-            deck.Add(new Card("Blue Steel", 1, 1, 1));
+            deck.Add(new Card("Flying Wind", 1, 1, 1, 4));
+            deck.Add(new Card("Severed Monkey Head", 1, 2, 1, 4));
+            deck.Add(new Card("Mystical Rock Head", 2, 0, 5, 2));
+            deck.Add(new Card("Lobster MCCrabs", 2, 1, 3, 2));
+            deck.Add(new Card("Goblin Troll", 3, 3, 2, 2));
+            deck.Add(new Card("Scorching Heatwave", 4, 5, 3, 1));
+            deck.Add(new Card("Blind Minotaurs", 3, 1, 3, 1 ));
+            deck.Add(new Card("Tim, The Wizard", 5, 6, 4, 1));
+            deck.Add(new Card("Sharply Dressed", 4, 3, 3, 1));
+            deck.Add(new Card("Blue Steel", 1, 1, 1, 2));
 
             foreach (Card card in deck)
             {

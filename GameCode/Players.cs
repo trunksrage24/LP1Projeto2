@@ -14,6 +14,8 @@ namespace GameCode
         public int HealthPoints { get; set; }
         //MP 
         public int ManaPoints { get; set; }
+        //Maximum MP for the current turn
+        public int MaxMana { get; set; }
         //List of 20 cards
         public List<Card> Deck { get; set; }
         //List of 6 cards
