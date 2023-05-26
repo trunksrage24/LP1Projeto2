@@ -55,10 +55,6 @@ namespace GameCode
             DrawInitialHand(player1);
             DrawInitialHand(player2);
 
-            //Starting hand
-            DrawInitialHand(player1);
-            DrawInitialHand(player2);
-
             //Game loop, checks both players health and card quantity.
             while (player1.HealthPoints > 0 && player2.HealthPoints > 0 
             && (player1.Deck.Count > 0 || player1.Hand.Count > 0 || 
@@ -108,18 +104,76 @@ namespace GameCode
         /// <param name="player"></param>
         private void DeckShuffler(Player player)
         {
-            CardList(); // Populate the deck with cards
+            List<Card> cardList = CardList(); 
 
-            // Use this to shuffle the deck
-        }
+            Random random = new Random();
+            //Maximum cards to draw per turn
+            int totalCards = Math.Min(6, cardList.Count); 
+
+            for (int i = 0; i < totalCards; i++)
+            {
+                int randomIndex = random.Next(cardList.Count);
+                Card card = cardList[randomIndex];
+
+                //Check if the card is still available (quantity > 0)
+                if (card.Quantity > 0)
+                {
+                    player.Deck.Add(card);
+
+                    //Decrease the quantity of the card in the card list
+                    card.Quantity--;
+
+                    //Remove the card from the card list if quantity = 0
+                    if (card.Quantity == 0)
+                    {
+                        cardList.RemoveAt(randomIndex);
+                    }
+                }
+                else
+                {
+                    //If the card is no longer available, repeat the iteration
+                    i--;
+                }
+            }
+}
 
         /// <summary>
-        /// Starting hand
+        /// Randomly Generated Starting hand
         /// </summary>
         /// <param name="player"></param>
         private void DrawInitialHand(Player player)
         {
-            //Use this to give players their hand each turn.
+            List<Card> cardList = CardList();
+
+            int cardsToDraw = Math.Min(6, player.Deck.Count);
+
+            for (int i = 0; i < cardsToDraw; i++)
+            {
+                if (player.Deck.Count == 0)
+                {
+                    Console.WriteLine($"Player {(player == player1 ? "1" : "2")}'s deck is empty.");
+                    break;
+                }
+
+                Random random = new Random();
+                int randomIndex = random.Next(player.Deck.Count);
+                Card card = player.Deck[randomIndex];
+                player.Hand.Add(card);
+
+                //Decrease the quantity of the card in the card list
+                card.Quantity--;
+
+                //Remove the card from the card list if its quantity reaches zero
+                if (card.Quantity == 0)
+                {
+                    cardList.Remove(card);
+                }
+
+                //Remove the card from the player's deck
+                player.Deck.RemoveAt(randomIndex);
+
+                Console.WriteLine($"Player {(player == player1 ? "1" : "2")} draws {card.Name}");
+            }
         }
 
         /// <summary>
@@ -131,8 +185,10 @@ namespace GameCode
             Console.WriteLine($"Player {(player == player1 ? "1" : "2")}'s turn");
             Console.WriteLine("Placement Phase");
 
-            int maxMana = Math.Min(player.MaxMana, 5); // Maximum mana for this turn
-            int availableMana = Math.Min(player.ManaPoints, maxMana); // Available mana to spend
+            //Maximum mana
+            int maxMana = Math.Min(player.MaxMana, 5); 
+            //Mana you can use in your turn
+            int availableMana = Math.Min(player.ManaPoints, maxMana); 
 
             int cardsToPlay = Math.Min(player.Hand.Count, availableMana);
 
@@ -141,36 +197,52 @@ namespace GameCode
                 Card card = player.Hand[i];
 
                 Console.WriteLine($"Player {(player == player1 ? "1" : "2")} puts down {card.Name}");
-                // Add logic to handle the placement of the card
 
                 // Update player's mana points and remove the card from their hand
                 player.ManaPoints -= card.Cost;
                 player.Hand.RemoveAt(i);
             }
 
-            // Increment turn counter
+            //Increment turn counter (This will help for mana)
             currentTurn++;
 
-            // Update maximum mana for this turn
+            //Update maximum mana for this turn
             if (currentTurn <= 5)
                 player.MaxMana++;
 
-            Console.WriteLine("End turn? 1, Continue 2");
+            Console.WriteLine("Choose an option:");
+            Console.WriteLine("1. Show cards in hand");
+            Console.WriteLine("2. End turn");
+
             string input = Console.ReadLine();
 
             if (input == "1")
+            {
+                Console.WriteLine($"Player {(player == player1 ? "1" : "2")}'s Hand:");
+                Console.WriteLine("Choose a card index to view its description:");
+
+                for (int i = 0; i < player.Hand.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {player.Hand[i].Name}");
+                }
+
+                input = Console.ReadLine();
+
+                if (int.TryParse(input, out int selectedIndex) 
+                && selectedIndex >= 1 && selectedIndex <= player.Hand.Count)
+                {
+                    Card selectedCard = player.Hand[selectedIndex - 1];
+                    Console.WriteLine($"Card: {selectedCard.Name}, Cost: {selectedCard.Cost}, AP: {selectedCard.AP}, DP: {selectedCard.DP}");
+                }
+            }
+
+            if (input == "2")
                 return;
-            else if (input == "2")
-                PlayTurn(player == player1 ? player2 : player1, currentTurn);
             else
-                Console.WriteLine("Invalid input. Continuing turn.");
+                PlayTurn(player == player1 ? player2 : player1, currentTurn);
 
             // Add logic for other options in the placement phase
         }
-
-
-
-
         /// <summary>
         /// This will begin the autonomous combat.
         /// </summary>
@@ -179,7 +251,7 @@ namespace GameCode
             //Attack Phase
         }
 
-        private void CardList()
+        private List<Card> CardList()
         {
             // Create list for card types
             List<Card> deck = new List<Card>();
@@ -196,10 +268,7 @@ namespace GameCode
             deck.Add(new Card("Sharply Dressed", 4, 3, 3, 1));
             deck.Add(new Card("Blue Steel", 1, 1, 1, 2));
 
-            foreach (Card card in deck)
-            {
-                Console.WriteLine("Card: {0}, {1}, {2}, {3}", card.Name, card.Cost.ToString(), card.AP.ToString(), card.DP.ToString());
-            }
+            return deck;
         }
 
     }
