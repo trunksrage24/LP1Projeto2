@@ -59,6 +59,19 @@ namespace LP1Projeto2
             //Starting hand
             DrawInitialHand(player1);
             DrawInitialHand(player2);
+
+            //Game loop, checks both players health and card quantity.
+            while (player1.HealthPoints > 0 && player2.HealthPoints > 0 
+            && (player1.Deck.Count > 0 || player1.Hand.Count > 0 |
+            | player2.Deck.Count > 0 || player2.Hand.Count > 0))
+            {
+                //Player 1 places their cards first
+                PlayTurn(player1);
+                //Player 2 places their cards second
+                PlayTurn(player2);
+                //begin autonomous combat afterwards
+                AttackPhase();
+            }
         }
 
         /// <summary>
@@ -86,6 +99,9 @@ namespace LP1Projeto2
         private void PlayTurn(Player player)
         {
             //Placement/Magic Phase
+            //ADD OPTIONS FOR PLAYERS TO CHOOSE FROM.
+            //1. Card list -> 1-6 depending on your hand. -> Continue or finish?
+            //2. Surrender
         }
 
         /// <summary>
