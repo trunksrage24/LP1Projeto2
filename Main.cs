@@ -46,7 +46,6 @@ namespace LP1Projeto2
             }
         }
     
-
         /// <summary>
         /// Main loop.
         /// </summary>
@@ -71,6 +70,33 @@ namespace LP1Projeto2
                 PlayTurn(player2);
                 //begin autonomous combat afterwards
                 AttackPhase();
+            }
+
+            //Determine the winner
+            //Player 1 Health lower or equal to 0
+            if (player1.HealthPoints <= 0)
+                //Player 2 wins
+                Console.WriteLine("Player 2 wins!");
+            //Player 2 Health lower or equal to 0
+            else if (player2.HealthPoints <= 0)
+                //Player 1 wins
+                Console.WriteLine("Player 1 wins!");
+            //If players health did not go all the way to 0
+            else
+            {
+                //Check for highest HP in case both players have no cards left
+                //Player 1 has more health than player 2
+                if (player1.HealthPoints > player2.HealthPoints)
+                    //Player 1 wins
+                    Console.WriteLine("Player 1 wins!");
+                //Player 2 has more health than player 1
+                else if (player2.HealthPoints > player1.HealthPoints)
+                    //Player 2 wins
+                    Console.WriteLine("Player 2 wins!");
+                //If they have the same amount of health
+                else
+                    //Draw
+                    Console.WriteLine("It's a draw!");
             }
         }
 
