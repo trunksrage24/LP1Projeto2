@@ -20,5 +20,28 @@ namespace GameCode
         public List<Card> Deck { get; set; }
         //List of 6 cards
         public List<Card> Hand { get; set; }
+
+        public bool IsTurn { get; private set; }
+
+        public List<Card> CombatList { get; set; } = new List<Card>();
+
+        public void StartTurn()
+        {
+            IsTurn = true;
+            MaxMana = Math.Min(5, MaxMana + 1); //Increase MaxMana by 1 up to a maximum of 5
+        }
+
+        public void EndTurn(int turnCount)
+        {
+            IsTurn = false;
+            Console.WriteLine($"Player {(IsTurn ? 1 : 2)} ends their turn.");
+            // Add any logic you need to perform at the end of the turn
+        }
+
+        public void UpdateMana()
+        {
+            //Update ManaPoints
+            ManaPoints = MaxMana;
+        }
     }
 }

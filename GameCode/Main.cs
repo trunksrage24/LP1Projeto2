@@ -14,88 +14,66 @@ namespace GameCode
 
         public Game()
         {
-            // Initialize players and their decks
+            //Initialize players and their decks
             player1 = new Player
             {
                 HealthPoints = 10,
-                ManaPoints = 0,
-                Deck = new List<Card>
-                {
-                    // Card List, will have to make it randomly generated
-                    new Card("Flying wand", 1, 1, 1, 4)
-                    // Add the rest of the cards to the deck
-                },
+                ManaPoints = 1,
+                Deck = new List<Card>(),
                 Hand = new List<Card>()
             };
 
-            // Repeat the process for player 2
+            //Repeat the process for player 2
             player2 = new Player
             {
                 HealthPoints = 10,
-                ManaPoints = 0,
-                Deck = new List<Card>
-                {
-                    // Card List, will have to make it randomly generated
-                    // Add cards for player 2
-                },
+                ManaPoints = 1,
+                Deck = new List<Card>(),
                 Hand = new List<Card>()
             };
         }
 
         public void StartGame()
         {
+            currentTurn = 1; 
 
-            currentTurn = 1; // Initialize current turn to 1
-
-            // Shuffle the decks
+            //Shuffle the decks before giving out cards
             DeckShuffler(player1);
             DeckShuffler(player2);
 
-            // Starting hand
+            //Starting hand for each player
             DrawInitialHand(player1);
             DrawInitialHand(player2);
 
-            //Game loop, checks both players health and card quantity.
-            while (player1.HealthPoints > 0 && player2.HealthPoints > 0 
-            && (player1.Deck.Count > 0 || player1.Hand.Count > 0 || 
-            player2.Deck.Count > 0 || player2.Hand.Count > 0))
+            //Game loop, checks both players' health and card quantity
+            while (player1.HealthPoints > 0 && player2.HealthPoints > 0
+                && (player1.Deck.Count > 0 || player1.Hand.Count > 0
+                || player2.Deck.Count > 0 || player2.Hand.Count > 0))
             {
-                //Player 1 places their cards first
 
-                //begin autonomous combat afterwards
+
+                PlayTurn(player1, player2);
                 AttackPhase();
 
-                PlayTurn(player1, currentTurn);
-                PlayTurn(player2, currentTurn);
 
             }
 
-            //Determine the winner
-            //Player 1 Health lower or equal to 0
-            if (player1.HealthPoints <= 0)
-                //Player 2 wins
-                Console.WriteLine("Player 2 wins!");
-            //Player 2 Health lower or equal to 0
-            else if (player2.HealthPoints <= 0)
-                //Player 1 wins
-                Console.WriteLine("Player 1 wins!");
-            //If players health did not go all the way to 0
-            else
+            // Determine the winner
+            if (player1.HealthPoints <= 0 && player2.HealthPoints <= 0)
             {
-                //Check for highest HP in case both players have no cards left
-                //Player 1 has more health than player 2
-                if (player1.HealthPoints > player2.HealthPoints)
-                    //Player 1 wins
-                    Console.WriteLine("Player 1 wins!");
-                //Player 2 has more health than player 1
-                else if (player2.HealthPoints > player1.HealthPoints)
-                    //Player 2 wins
-                    Console.WriteLine("Player 2 wins!");
-                //If they have the same amount of health
-                else
-                    //Draw
-                    Console.WriteLine("It's a draw!");
+                Console.WriteLine("It's a draw!");
             }
+            else if (player1.HealthPoints <= 0)
+            {
+                Console.WriteLine("Player 2 wins!");
+            }
+            else if (player2.HealthPoints <= 0)
+            {
+                Console.WriteLine("Player 1 wins!");
+            }
+
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
         }
 
         /// <summary>
@@ -180,69 +158,73 @@ namespace GameCode
         /// You will place your cards here
         /// </summary>
         /// <param name="player"></param>
-        private void PlayTurn(Player player, int currentTurn)
+        public void PlayTurn(Player player1, Player player2)
         {
-            Console.WriteLine($"Player {(player == player1 ? "1" : "2")}'s turn");
-            Console.WriteLine("Placement Phase");
+            int currentPlayerIndex = player1.IsTurn ? 1 : 2;
+            Player currentPlayer = player1.IsTurn ? player1 : player2;
+            Player opponent = player1.IsTurn ? player2 : player1;
 
-            //Maximum mana
-            int maxMana = Math.Min(player.MaxMana, 5); 
-            //Mana you can use in your turn
-            int availableMana = Math.Min(player.ManaPoints, maxMana); 
+            currentPlayer.StartTurn();
+            currentPlayer.UpdateMana();
 
-            int cardsToPlay = Math.Min(player.Hand.Count, availableMana);
-
-            for (int i = 0; i < cardsToPlay; i++)
+            Console.WriteLine($"--- Player {(currentPlayer == player1 ? "1" : "2")} Turn ---");
+            Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} Hand:");
+            for (int i = 0; i < currentPlayer.Hand.Count; i++)
             {
-                Card card = player.Hand[i];
-
-                Console.WriteLine($"Player {(player == player1 ? "1" : "2")} puts down {card.Name}");
-
-                // Update player's mana points and remove the card from their hand
-                player.ManaPoints -= card.Cost;
-                player.Hand.RemoveAt(i);
+                Card card = currentPlayer.Hand[i];
+                Console.WriteLine($"{i + 1}. {card.Name} (Cost: {card.Cost}, Power: {card.AP})");
             }
 
-            //Increment turn counter (This will help for mana)
-            currentTurn++;
-
-            //Update maximum mana for this turn
-            if (currentTurn <= 5)
-                player.MaxMana++;
-
-            Console.WriteLine("Choose an option:");
-            Console.WriteLine("1. Show cards in hand");
-            Console.WriteLine("2. End turn");
-
-            string input = Console.ReadLine();
-
-            if (input == "1")
+            // Placement Phase
+            Console.WriteLine("Placement Phase:");
+            while (currentPlayer.Hand.Count > 0)
             {
-                Console.WriteLine($"Player {(player == player1 ? "1" : "2")}'s Hand:");
-                Console.WriteLine("Choose a card index to view its description:");
+                Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} Mana: {currentPlayer.ManaPoints}");
+                Console.WriteLine("Enter the number of the card you want to play (or 0 to end placement phase):");
+                int cardNumber = int.Parse(Console.ReadLine()) - 1;
 
-                for (int i = 0; i < player.Hand.Count; i++)
+                // Check if player wants to end the placement phase
+                if (cardNumber == -1)
                 {
-                    Console.WriteLine($"{i + 1}. {player.Hand[i].Name}");
+                    break;
                 }
 
-                input = Console.ReadLine();
-
-                if (int.TryParse(input, out int selectedIndex) 
-                && selectedIndex >= 1 && selectedIndex <= player.Hand.Count)
+                // Check if card number is valid
+                if (cardNumber < 0 || cardNumber >= currentPlayer.Hand.Count)
                 {
-                    Card selectedCard = player.Hand[selectedIndex - 1];
-                    Console.WriteLine($"Card: {selectedCard.Name}, Cost: {selectedCard.Cost}, AP: {selectedCard.AP}, DP: {selectedCard.DP}");
+                    Console.WriteLine("Invalid card number. Please try again.");
+                    continue;
                 }
+
+                Card card = currentPlayer.Hand[cardNumber];
+
+                //Check if player has enough available mana to play the card
+                if (card.Cost > currentPlayer.ManaPoints)
+                {
+                    Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} does not have enough mana to play {card.Name}.");
+                    continue; // Skip playing this card and move to the next one
+                }
+
+                Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} puts down {card.Name}");
+
+                //Update player's mana points and remove the card from their hand
+                currentPlayer.ManaPoints -= card.Cost;
+                currentPlayer.Hand.RemoveAt(cardNumber);
             }
 
-            if (input == "2")
-                return;
-            else
-                PlayTurn(player == player1 ? player2 : player1, currentTurn);
+            //Attack Phase
+            Console.WriteLine("Attack Phase:");
+            //
 
-            // Add logic for other options in the placement phase
+            //End of turn
+            currentPlayer.EndTurn(currentPlayerIndex);
+            opponent.StartTurn();
+
+            Console.WriteLine("Press enter to continue...");
+            Console.ReadLine();
         }
+
+
         /// <summary>
         /// This will begin the autonomous combat.
         /// </summary>
@@ -270,6 +252,5 @@ namespace GameCode
 
             return deck;
         }
-
     }
 }
