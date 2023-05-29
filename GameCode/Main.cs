@@ -55,6 +55,18 @@ namespace GameCode
                 PlayTurn(player1, player2);
                 AttackPhase();
 
+                if (player2.HealthPoints <= 0)
+                    break; // Player 2 has lost, exit the loop
+
+                PlayTurn(player2, player1); // Player 2 takes a turn
+                AttackPhase();
+
+                if (player1.HealthPoints <= 0)
+                    break; // Player 1 has lost, exit the loop
+
+                player1.UpdateMana();
+                player2.UpdateMana();
+
 
             }
 
@@ -158,14 +170,9 @@ namespace GameCode
         /// You will place your cards here
         /// </summary>
         /// <param name="player"></param>
-        public void PlayTurn(Player player1, Player player2)
+        public void PlayTurn(Player currentPlayer, Player opponent)
         {
-            int currentPlayerIndex = player1.IsTurn ? 1 : 2;
-            Player currentPlayer = player1.IsTurn ? player1 : player2;
-            Player opponent = player1.IsTurn ? player2 : player1;
-
             currentPlayer.StartTurn();
-            currentPlayer.UpdateMana();
 
             Console.WriteLine($"--- Player {(currentPlayer == player1 ? "1" : "2")} Turn ---");
             Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} Hand:");
@@ -212,17 +219,17 @@ namespace GameCode
                 currentPlayer.Hand.RemoveAt(cardNumber);
             }
 
-            //Attack Phase
+            // Attack Phase
             Console.WriteLine("Attack Phase:");
-            //
+            // ...
 
-            //End of turn
-            currentPlayer.EndTurn(currentPlayerIndex);
-            opponent.StartTurn();
+            // End of turn
+            currentPlayer.EndTurn(currentTurn);
 
             Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
         }
+
 
 
         /// <summary>
