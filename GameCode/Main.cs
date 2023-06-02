@@ -77,19 +77,20 @@ namespace GameCode
 
 
                 PlayTurn(player1, player2);
-                AttackPhase();
+                Console.WriteLine(player1.HealthPoints);
                 Console.WriteLine("\n" , "---------------" , "\n");
                 if (player2.HealthPoints <= 0)
                     break; // Player 2 has lost, exit the loop
 
                 PlayTurn(player2, player1); // Player 2 takes a turn
-                AttackPhase();
                 Console.WriteLine("\n" , "---------------" , "\n");
                 if (player1.HealthPoints <= 0)
                     break; // Player 1 has lost, exit the loop
 
                 PrintSetDownCards();
                 Console.WriteLine("\n" , "---------------" , "\n");
+
+                AttackPhase();
 
 
             }
@@ -199,6 +200,7 @@ namespace GameCode
             currentPlayer.StartTurn();
 
             Console.WriteLine($"--- Player {(currentPlayer == player1 ? "1" : "2")} Turn ---");
+            Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} Health: {currentPlayer.HealthPoints}");
             Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} Hand:");
             for (int i = 0; i < currentPlayer.Hand.Count; i++)
             {
@@ -253,10 +255,6 @@ namespace GameCode
                 }
             }
 
-            // Attack Phase
-            Console.WriteLine("Attack Phase:");
-            // ...
-
             // End of turn
             currentPlayer.EndTurn(currentTurn);
             
@@ -267,15 +265,44 @@ namespace GameCode
         }
 
 
-
-
         /// <summary>
         /// This will begin the autonomous combat.
         /// </summary>
         private void AttackPhase()
         {
-            //Attack Phase
+            // Iterate through each pair of set down cards
+            for (int i = 0; i < player1SetDownCards.Count && i < player2SetDownCards.Count; i++)
+            {
+                Card player1Card = player1SetDownCards[i];
+                Card player2Card = player2SetDownCards[i];
+
+                int player1Attack = player1Card.AP - player2Card.DP;
+                int player2Attack = player2Card.AP - player1Card.DP;
+
+                //Player 1 attacks Player 2
+                player2.HealthPoints -= Math.Max(player1Attack, 0);
+
+                //Check if Player 2 has a second card placed
+                if (i + 1 < player2SetDownCards.Count)
+                {
+                    Card player2SecondCard = player2SetDownCards[i + 1];
+                    int remainingAttack = Math.Max(player1Attack - player2SecondCard.DP, 0);
+                    player2.HealthPoints -= remainingAttack;
+                }
+
+                //Player 2 attacks Player 1
+                player1.HealthPoints -= Math.Max(player2Attack, 0);
+
+                //Check if Player 1 has a second card placed
+                if (i + 1 < player1SetDownCards.Count)
+                {
+                    Card player1SecondCard = player1SetDownCards[i + 1];
+                    int remainingAttack = Math.Max(player2Attack - player1SecondCard.DP, 0);
+                    player1.HealthPoints -= remainingAttack;
+                }
+            }
         }
+
 
         private List<Card> CardList()
         {
