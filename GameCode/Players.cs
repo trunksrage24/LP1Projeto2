@@ -29,6 +29,7 @@ namespace GameCode
         {
             IsTurn = true;
             MaxMana = Math.Min(5, MaxMana + 1); //Increase MaxMana by 1 up to a maximum of 5
+            ManaPoints = MaxMana;
         }
 
         public void EndTurn(int turnCount)
@@ -36,12 +37,6 @@ namespace GameCode
             IsTurn = false;
             Console.WriteLine($"Player {(IsTurn ? 1 : 2)} ends their turn.");
             // Add any logic you need to perform at the end of the turn
-        }
-
-        public void UpdateMana()
-        {
-            //Update ManaPoints
-            ManaPoints = MaxMana;
         }
     }
 }

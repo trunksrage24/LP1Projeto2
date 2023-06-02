@@ -44,16 +44,19 @@ namespace GameCode
             Console.WriteLine("Player 1's Set Down Cards:");
             foreach (Card card in player1SetDownCards)
             {
-                Console.WriteLine($"{card.Name} (Cost: {card.Cost}, Power: {card.AP})");
+                Console.WriteLine($"{card.Name} (Cost: {card.Cost}, Power: {card.AP}), Defense: {card.DP}");
             }
 
             Console.WriteLine("Player 2's Set Down Cards:");
             foreach (Card card in player2SetDownCards)
             {
-                Console.WriteLine($"{card.Name} (Cost: {card.Cost}, Power: {card.AP})");
+                Console.WriteLine($"{card.Name} (Cost: {card.Cost}, Power: {card.AP}), Defense: {card.DP}");
             }
         }
 
+        /// <summary>
+        /// At the beginning of the game it will call these functions
+        /// </summary>
         public void StartGame()
         {
             currentTurn = 1; 
@@ -87,8 +90,6 @@ namespace GameCode
 
                 PrintSetDownCards();
                 Console.WriteLine("\n" , "---------------" , "\n");
-                player1.UpdateMana();
-                player2.UpdateMana();
 
 
             }
@@ -202,7 +203,7 @@ namespace GameCode
             for (int i = 0; i < currentPlayer.Hand.Count; i++)
             {
                 Card card = currentPlayer.Hand[i];
-                Console.WriteLine($"{i + 1}. {card.Name} (Cost: {card.Cost}, Power: {card.AP})");
+                Console.WriteLine($"{i + 1}. {card.Name} (Cost: {card.Cost}), (Power: {card.AP}), (Defense: {card.DP})");
             }
 
             // Placement Phase
@@ -258,6 +259,7 @@ namespace GameCode
 
             // End of turn
             currentPlayer.EndTurn(currentTurn);
+            
             
 
             Console.WriteLine("Press enter to continue...");
