@@ -10,6 +10,9 @@ namespace GameCode
         private Player player1;
         private Player player2;
 
+        private List<Card> player1SetDownCards;
+        private List<Card> player2SetDownCards;
+
         private int currentTurn;
 
         public Game()
@@ -31,6 +34,24 @@ namespace GameCode
                 Deck = new List<Card>(),
                 Hand = new List<Card>()
             };
+
+            player1SetDownCards = new List<Card>();
+            player2SetDownCards = new List<Card>();
+        }
+
+        public void PrintSetDownCards()
+        {
+            Console.WriteLine("Player 1's Set Down Cards:");
+            foreach (Card card in player1SetDownCards)
+            {
+                Console.WriteLine($"{card.Name} (Cost: {card.Cost}, Power: {card.AP})");
+            }
+
+            Console.WriteLine("Player 2's Set Down Cards:");
+            foreach (Card card in player2SetDownCards)
+            {
+                Console.WriteLine($"{card.Name} (Cost: {card.Cost}, Power: {card.AP})");
+            }
         }
 
         public void StartGame()
@@ -54,16 +75,18 @@ namespace GameCode
 
                 PlayTurn(player1, player2);
                 AttackPhase();
-
+                Console.WriteLine("\n" , "---------------" , "\n");
                 if (player2.HealthPoints <= 0)
                     break; // Player 2 has lost, exit the loop
 
                 PlayTurn(player2, player1); // Player 2 takes a turn
                 AttackPhase();
-
+                Console.WriteLine("\n" , "---------------" , "\n");
                 if (player1.HealthPoints <= 0)
                     break; // Player 1 has lost, exit the loop
 
+                PrintSetDownCards();
+                Console.WriteLine("\n" , "---------------" , "\n");
                 player1.UpdateMana();
                 player2.UpdateMana();
 
@@ -205,7 +228,7 @@ namespace GameCode
 
                 Card card = currentPlayer.Hand[cardNumber];
 
-                //Check if player has enough available mana to play the card
+                // Check if player has enough available mana to play the card
                 if (card.Cost > currentPlayer.ManaPoints)
                 {
                     Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} does not have enough mana to play {card.Name}.");
@@ -214,9 +237,19 @@ namespace GameCode
 
                 Console.WriteLine($"Player {(currentPlayer == player1 ? "1" : "2")} puts down {card.Name}");
 
-                //Update player's mana points and remove the card from their hand
+                // Update player's mana points and remove the card from their hand
                 currentPlayer.ManaPoints -= card.Cost;
                 currentPlayer.Hand.RemoveAt(cardNumber);
+
+                // Add the card to the set down cards list
+                if (currentPlayer == player1)
+                {
+                    player1SetDownCards.Add(card);
+                }
+                else if (currentPlayer == player2)
+                {
+                    player2SetDownCards.Add(card);
+                }
             }
 
             // Attack Phase
@@ -225,10 +258,12 @@ namespace GameCode
 
             // End of turn
             currentPlayer.EndTurn(currentTurn);
+            
 
             Console.WriteLine("Press enter to continue...");
             Console.ReadLine();
         }
+
 
 
 
