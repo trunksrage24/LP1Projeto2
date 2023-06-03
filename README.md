@@ -25,7 +25,7 @@ Trabalho feito para LP1 por:
     * Código inicial
     * Card List
 
-	* João Carvalho, 22204909
+* João Carvalho, 22204909
     * Nada
 
 
