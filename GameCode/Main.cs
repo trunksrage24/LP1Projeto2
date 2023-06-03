@@ -92,6 +92,12 @@ namespace GameCode
 
                 AttackPhase();
 
+                Console.WriteLine("Type in \"quit\" if you want to quit");
+                if (Console.ReadLine().ToLower() == "quit")
+                {
+                    Console.WriteLine("Exiting the game. Thanks for playing!");
+                    Environment.Exit(0);
+                }
 
             }
 
@@ -150,7 +156,7 @@ namespace GameCode
                     i--;
                 }
             }
-}
+        }
 
         /// <summary>
         /// Randomly Generated Starting hand
@@ -270,38 +276,66 @@ namespace GameCode
         /// </summary>
         private void AttackPhase()
         {
-            // Iterate through each pair of set down cards
-            for (int i = 0; i < player1SetDownCards.Count && i < player2SetDownCards.Count; i++)
+            // Create a list to hold defeated cards
+            var defeatedCards = new List<Card>();
+
+            // Player 1's cards attack Player 2's cards
+            foreach (var card1 in player1SetDownCards)
             {
-                Card player1Card = player1SetDownCards[i];
-                Card player2Card = player2SetDownCards[i];
-
-                int player1Attack = player1Card.AP - player2Card.DP;
-                int player2Attack = player2Card.AP - player1Card.DP;
-
-                //Player 1 attacks Player 2
-                player2.HealthPoints -= Math.Max(player1Attack, 0);
-
-                //Check if Player 2 has a second card placed
-                if (i + 1 < player2SetDownCards.Count)
+                foreach (var card2 in player2SetDownCards)
                 {
-                    Card player2SecondCard = player2SetDownCards[i + 1];
-                    int remainingAttack = Math.Max(player1Attack - player2SecondCard.DP, 0);
-                    player2.HealthPoints -= remainingAttack;
-                }
+                    card2.DP -= card1.AP;
+                    card1.DP -= card2.AP;
 
-                //Player 2 attacks Player 1
-                player1.HealthPoints -= Math.Max(player2Attack, 0);
+                    // Check if Player 2's card is defeated
+                    if (card2.DP <= 0)
+                    {
+                        defeatedCards.Add(card2);
+                    }
 
-                //Check if Player 1 has a second card placed
-                if (i + 1 < player1SetDownCards.Count)
-                {
-                    Card player1SecondCard = player1SetDownCards[i + 1];
-                    int remainingAttack = Math.Max(player2Attack - player1SecondCard.DP, 0);
-                    player1.HealthPoints -= remainingAttack;
+                    // Check if Player 1's card is defeated
+                    if (card1.DP <= 0)
+                    {
+                        defeatedCards.Add(card1);
+                    }
                 }
             }
+
+            // Remove defeated cards from Player 2's set down cards
+            foreach (var card in defeatedCards)
+            {
+                player2SetDownCards.Remove(card);
+            }
+
+            // Remove defeated cards from Player 1's set down cards
+            foreach (var card in defeatedCards)
+            {
+                player1SetDownCards.Remove(card);
+            }
+
+            // Player 1's surviving cards attack Player 2's health
+            foreach (var card in player1SetDownCards)
+            {
+                if (player2.HealthPoints <= 0)
+                {
+                    break;
+                }
+
+                player2.HealthPoints -= card.AP;
+            }
+
+            // Player 2's surviving cards attack Player 1's health
+            foreach (var card in player2SetDownCards)
+            {
+                if (player1.HealthPoints <= 0)
+                {
+                    break;
+                }
+
+                player1.HealthPoints -= card.AP;
+            }
         }
+
 
 
         private List<Card> CardList()
