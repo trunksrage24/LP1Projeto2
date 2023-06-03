@@ -7,20 +7,26 @@ O conceito do trabalho é fazer um Jogo onde existe três lâmpadas e três but�
 __________________________________________________________
 Trabalho feito para LP1 por:
   * João Sá Marques 22209640
-    * Atualização do Markdown
+    * Criação e atualização do Markdown
     * Implementação do "Código Base" para ínicio de Projeto;
     * Cartas
     * Player
-    * Fase 1
-    * Fase 2
+    * StartGame
+    * DeckShuffler
+    * DrawInitialHand
+    * PlayTurn
+    * SetDownCards
+    * AttackPhase
+    * Comentários XML
+    * UML
     
   * Vitor Daniel, 22204782
     * Criação do Repositório
-    * Criação do Markdown
-    * Código Base
+    * Código inicial
+    * Card List
 
-	João Carvalho, 22204909
-	* Nada
+	* João Carvalho, 22204909
+    * Nada
 
 
 __________________________________________________________
