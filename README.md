@@ -19,6 +19,7 @@ Trabalho feito para LP1 por:
     * SetDownCards;
     * AttackPhase;
     * Comentários XML;
+    * UML;
     
   * Vitor Daniel, 22204782
     * Criação do Repositório;
@@ -26,7 +27,6 @@ Trabalho feito para LP1 por:
     * Card List;
 
 * João Carvalho, 22204909
-    * UML;
     * review código e comentários
 
 
