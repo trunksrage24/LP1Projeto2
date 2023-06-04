@@ -32,8 +32,10 @@ Trabalho feito para LP1 por:
 
 __________________________________________________________
 #### *Erros encontrados e desafios*
-- A mana estava constantemente a ter problemas e as cartas eram díficeis 
-de lutarem umas com as outras.
+- A mana estava constantemente a falhar de fazer update no momento certo
+- AttackPhase estava a ter problemas a tirar as cartass e também faze-las 
+lutar.
+- Lista cartas tinha problemas a dar cartas corretamente
 
 __________________________________________________________
 ## Arquitetura de Solução
