@@ -8,26 +8,27 @@ O utilizador deve ligar todas as lâmpadas, no mínimo de turnos.
 __________________________________________________________
 Trabalho feito para LP1 por:
   * João Sá Marques 22209640
-    * Criação e atualização do Markdown
-    * Código inicial;
-    * Cartas;
-    * Player;
-    * StartGame;
-    * DeckShuffler;
-    * DrawInitialHand;
-    * PlayTurn;
-    * SetDownCards;
-    * AttackPhase;
-    * Comentários XML;
-    * UML;
+    * Criação do Markdown; 6/6/2023
+    * Atualização do Markdown; 6/5/2023
+    * Código inicial; 6/5/2023
+    * Update das cartas; 6/5/2023
+    * Player; 6/5/2023
+    * StartGame; 7/5/2023
+    * DeckShuffler; 7/5/2023
+    * DrawInitialHand; 7/5/2023
+    * PlayTurn; 7/5/2023
+    * SetDownCards; 7/5/2023
+    * AttackPhase; 3/6/2023
+    * Comentários XML; 4/6/2023
+    * UML; 6/6/2023
     
   * Vitor Daniel, 22204782
-    * Criação do Repositório;
-    * Código inicial;
-    * Card List;
+    * Criação do Repositório; 6/5/2023
+    * Código inicial; 6/5/2023
+    * Card List; 6/5/2023
 
 * João Carvalho, 22204909
-    * review código e comentários
+    * review código e comentários 3/6/2023
 
 
 __________________________________________________________
@@ -56,9 +57,20 @@ __________________________________________________________
 
 __________________________________________________________
 
-## Fluxograma
-![Fluxograma](Fluxograma.png)
+## UML
+![UML](UML.png)
 
+
+__________________________________________________________
+
+## Interpretação
+1. Jogo de cartas
+  - Dois jogadores, cada com 10 de vida e mana que aumenta +1 por turno até 
+chegar a 5 máximo.
+  - Uma fase onde os jogadores tiram cartas
+  - Uma fase onde as cartas atacam
+  - E dependendo da vida dos jogadores no fim, um ganha ou draw se ambos tiverem
+a mesma vida.
 
 __________________________________________________________
 ## Referências
