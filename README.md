@@ -9,23 +9,23 @@ __________________________________________________________
 Trabalho feito para LP1 por:
   * João Sá Marques 22209640
     * Criação do Markdown; 6/6/2023
-    * Atualização do Markdown; 6/5/2023
-    * Código inicial; 6/5/2023
-    * Update das cartas; 6/5/2023
-    * Player; 6/5/2023
-    * StartGame; 7/5/2023
-    * DeckShuffler; 7/5/2023
-    * DrawInitialHand; 7/5/2023
-    * PlayTurn; 7/5/2023
-    * SetDownCards; 7/5/2023
+    * Atualização do Markdown; 26/5/2023
+    * Código inicial; 26/5/2023
+    * Update das cartas; 26/5/2023
+    * Player; 26/5/2023
+    * StartGame; 27/5/2023
+    * DeckShuffler; 27/5/2023
+    * DrawInitialHand; 27/5/2023
+    * PlayTurn; 27/5/2023
+    * SetDownCards; 27/5/2023
     * AttackPhase; 3/6/2023
     * Comentários XML; 4/6/2023
     * UML; 6/6/2023
     
   * Vitor Daniel, 22204782
-    * Criação do Repositório; 6/5/2023
-    * Código inicial; 6/5/2023
-    * Card List; 6/5/2023
+    * Criação do Repositório; 26/5/2023
+    * Código inicial; 26/5/2023
+    * Card List; 26/5/2023
 
 * João Carvalho, 22204909
     * review código e comentários 3/6/2023
