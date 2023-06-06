@@ -55,6 +55,7 @@ namespace GameCode
 
                 //ask if players want to quit
                 Console.WriteLine("Type in \"quit\" if you want to quit");
+                Console.WriteLine("Press enter if not");
                 if (Console.ReadLine().ToLower() == "quit")
                 {
                     //Goodbye message
