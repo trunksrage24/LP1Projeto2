@@ -5,6 +5,9 @@ namespace GameCode
 {
     public partial class Game
     {
+        /// <summary>
+        /// Cards inside the battlefield
+        /// </summary>
         public void PrintSetDownCards()
         {
             //Player 1's cards in the battlefield

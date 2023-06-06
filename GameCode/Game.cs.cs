@@ -5,8 +5,9 @@ namespace GameCode
 {
     public partial class Game
     {
-        // Existing fields and constructor
-
+        /// <summary>
+        /// At the beginning of the game it will call these functions
+        /// </summary>
         public void StartGame()
         {
             currentTurn = 1; 
@@ -72,6 +73,9 @@ namespace GameCode
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// This will begin the autonomous combat.
+        /// </summary>
         private void AttackPhase()
         {
             //Create a list to hold defeated cards

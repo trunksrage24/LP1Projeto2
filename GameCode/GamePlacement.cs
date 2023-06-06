@@ -5,6 +5,10 @@ namespace GameCode
 {
     public partial class Game
     {
+        /// <summary>
+        /// You will place your cards here and also check your stats
+        /// </summary>
+        /// <param name="player"></param>
         public void PlayTurn(Player currentPlayer, Player opponent)
         {
             //Player stats are shown each turn
@@ -75,6 +79,10 @@ namespace GameCode
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// This will shuffle the cards before giving them to the players.
+        /// </summary>
+        /// <param name="player"></param>
         private void DeckShuffler(Player player)
         {
             //List of cards in cardlist
@@ -112,6 +120,10 @@ namespace GameCode
             }
         }
 
+        /// <summary>
+        /// Randomly Generated Starting hand
+        /// </summary>
+        /// <param name="player"></param>
         private void DrawInitialHand(Player player)
         {
             //Cards given out

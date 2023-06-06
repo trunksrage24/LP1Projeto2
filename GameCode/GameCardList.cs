@@ -5,6 +5,10 @@ namespace GameCode
 {
     public partial class Game
     {
+        /// <summary>
+        /// Card deck list
+        /// </summary>
+        /// <returns></returns>
         private List<Card> CardList()
         {
             // Create list for card types
