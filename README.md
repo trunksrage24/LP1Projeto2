@@ -21,6 +21,7 @@ Trabalho feito para LP1 por:
     * AttackPhase; 3/6/2023
     * Comentários XML; 4/6/2023
     * UML; 6/6/2023
+    * Re-organização do projeto; 6/6/2023
     
   * Vitor Daniel, 22204782
     * Criação do Repositório; 26/5/2023
@@ -37,13 +38,14 @@ __________________________________________________________
 - AttackPhase estava a ter problemas a tirar as cartass e também faze-las 
 lutar.
 - Lista cartas tinha problemas a dar cartas corretamente
+- Fazer o MVC
+- Estruturar o código
 
 __________________________________________________________
 ## Arquitetura de Solução
 
 1. Explicação ao Jogador
 	- Introdução ao Jogador;
-	- Consentimento para Prosseguir.
 
 2. Inicialização do Jogo
 	* O jogo demonstra as cartas tiradas para ambos os jogadores
