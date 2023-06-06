@@ -11,7 +11,14 @@ namespace GameCode
         public void StartGame()
         {
             Console.WriteLine("Welcome to the game!");
+            Console.WriteLine("In the following! you will play a card game");
+            Console.WriteLine("Each turn, gain +1 mana to use on your cards");
+            Console.WriteLine("Up to a maximum of 5 MANA PER TURN.");
+            Console.WriteLine("Place a card down and then press 0 and enter");
+            Console.WriteLine("after both players picked their cards");
+            Console.WriteLine("They will fight each turn. Good luck!");
 
+            Console.WriteLine("\n" , "---------------" , "\n");
             currentTurn = 1; 
 
             //Shuffle the decks before giving out cards
