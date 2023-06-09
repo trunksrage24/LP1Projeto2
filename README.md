@@ -1,8 +1,16 @@
 # Jogo de cartas
 ## Projeto 2 - Grupo 2 - https://github.com/trunksrage24/LP1Projeto2
 
-O conceito do trabalho é fazer um Jogo onde existe três lâmpadas e três butões. 
-O utilizador deve ligar todas as lâmpadas, no mínimo de turnos.
+O conceito do trabalho é criar um jogo de cartas onde dois jogadores lutam
+um contra o outro utlizando mana como recurso de batalha e cartas para combate.
+
+As cartas são acessiveis com mana por cada turno que aumenta +1 até um 
+máximo de 5 de mana.
+
+As cartas têm AP, DP, custo. AP vai contra o DP, e o restante AP, caso a carta
+é destruida, vai contra o jogador.
+
+Cada jogador tem 10 de vida e começa com 1 de mana.
 
 ## Autores
 __________________________________________________________
